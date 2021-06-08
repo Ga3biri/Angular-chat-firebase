@@ -1,0 +1,70 @@
+<div class="container mt-4  mb-4">
+    <section id="chat-room">
+        <div class="container">
+            <div class="row mt-5 mb-5 main-chat">
+                <nav class="col-md-12">
+                    <div class="row" style="background-color: #EDEDED; border-top-right-radius: 10px;; border-top-left-radius: 10px;">
+                        <div class="col-md-12">
+                            <div class="row p-2">
+                                <div class="col-md-6">
+                                    <h6 style="color: #5bc073;" class=" m-0">{{chat_header}}</h6>
+                                    <span style="font-size: 10px;color: #ABAAAA;">Start Chat now  </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 messages-area mb-2" #chatcontent [scrollTop]="scrolltop" dir="rtl">
+                            <div class="message-container" *ngFor="let chat of chats">
+    
+                                <div class="msg send" *ngIf="chat.nickname === nickname">
+                                    <div [ngSwitch]="chat.type">
+                                        <p  *ngSwitchCase="'url'"><a href="{{chat.message}}" target="_blank" dir="ltr">{{chat.message}}</a></p>
+                                        <p *ngSwitchDefault>{{chat.message}}</p>
+                                    </div>
+                                </div>
+            
+                                <div class="msg receive" *ngIf="chat.nickname !== nickname">
+                                     <div [ngSwitch]="chat.type">
+                                        <p *ngSwitchCase="'url'"><a href="{{chat.message}}" target="_blank" dir="ltr">{{chat.message}}</a></p>
+                                        <p *ngSwitchDefault>{{chat.message}}</p>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <!-- sendbar-area -->
+                        <div class="col-md-12 send-row">
+                            <div class="row">
+                                <div class="col-md-1 col-auto">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-6">
+                                            <button class="btn" (click)="sendMessage(message)" >
+                                                Send
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 col-auto">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-6 mt-1">
+                                            <i class="fas fa-paperclip" style="cursor: pointer;" (click)="upload_click.click()"></i>
+                                            <input type="file" (change)="upload($event)" accept=".png,.jpg,.mp4" #upload_click hidden/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 col-auto">
+                                    <input type="text" class="form-control" (keyup.enter)="sendMessage($event.target)"  placeholder="Type your message......!" #message>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress" *ngIf="show_progress">
+                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </section> 
+    </div>
